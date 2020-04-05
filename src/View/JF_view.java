@@ -5,19 +5,61 @@
  */
 package View;
 
+import java.awt.BorderLayout;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JPanel;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rtextarea.RTextScrollPane;
+
 /**
  *
  * @author Adilson
  */
 public class JF_view extends javax.swing.JFrame {
+    public RSyntaxTextArea textArea1;
+    public RSyntaxTextArea textArea2;
+    public RSyntaxTextArea textArea3;
+    public RSyntaxTextArea textArea4;
 
     /**
      * Creates new form JF_view
      */
     public JF_view() {
         initComponents();
+        //BLOCO 1
+        jP_1.setLayout(new BorderLayout());
+        textArea1 = new RSyntaxTextArea(20, 90);
+        textArea1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DELPHI);
+        textArea1.setCodeFoldingEnabled(true);
+        RTextScrollPane sp1 = new RTextScrollPane(textArea1);
+        jP_1.add(sp1);
+        //BLOCO 2
+        jP_2.setLayout(new BorderLayout());
+        textArea2 = new RSyntaxTextArea(20, 90);
+        textArea2.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DELPHI);
+        textArea2.setCodeFoldingEnabled(true);
+        RTextScrollPane sp2 = new RTextScrollPane(textArea2);
+        jP_2.add(sp2);
+         //BLOCO 3
+        jP_3.setLayout(new BorderLayout());
+        textArea3 = new RSyntaxTextArea(20, 90);
+        textArea3.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DELPHI);
+        textArea3.setCodeFoldingEnabled(true);
+        RTextScrollPane sp3 = new RTextScrollPane(textArea3);
+        jP_3.add(sp3);
+        //BLOCO 4
+        jP_4.setLayout(new BorderLayout());
+        textArea4 = new RSyntaxTextArea(20, 90);
+        textArea4.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DELPHI);
+        textArea4.setCodeFoldingEnabled(true);
+        RTextScrollPane sp4 = new RTextScrollPane(textArea4);
+        jP_4.add(sp4);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,21 +69,270 @@ public class JF_view extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jP_1 = new javax.swing.JPanel();
+        jP_2 = new javax.swing.JPanel();
+        jP_3 = new javax.swing.JPanel();
+        jP_4 = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMI_new = new javax.swing.JMenuItem();
+        jMI_open = new javax.swing.JMenuItem();
+        jMI_close = new javax.swing.JMenuItem();
+        jMI_save = new javax.swing.JMenuItem();
+        jMI_saveas = new javax.swing.JMenuItem();
+        jMI_print = new javax.swing.JMenuItem();
+        jMI_exit = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMI_execute = new javax.swing.JMenuItem();
+        jMI_open1 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMI_waterfall = new javax.swing.JMenuItem();
+        jMI_sidebyside = new javax.swing.JMenuItem();
+        jMI_organize = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMI_about = new javax.swing.JMenuItem();
+
+        jCheckBox1.setText("jCheckBox1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout jP_1Layout = new javax.swing.GroupLayout(jP_1);
+        jP_1.setLayout(jP_1Layout);
+        jP_1Layout.setHorizontalGroup(
+            jP_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 552, Short.MAX_VALUE)
+        );
+        jP_1Layout.setVerticalGroup(
+            jP_1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 181, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Fonte", jP_1);
+
+        javax.swing.GroupLayout jP_2Layout = new javax.swing.GroupLayout(jP_2);
+        jP_2.setLayout(jP_2Layout);
+        jP_2Layout.setHorizontalGroup(
+            jP_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 552, Short.MAX_VALUE)
+        );
+        jP_2Layout.setVerticalGroup(
+            jP_2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 181, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Itens Léxicos", jP_2);
+
+        javax.swing.GroupLayout jP_3Layout = new javax.swing.GroupLayout(jP_3);
+        jP_3.setLayout(jP_3Layout);
+        jP_3Layout.setHorizontalGroup(
+            jP_3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 552, Short.MAX_VALUE)
+        );
+        jP_3Layout.setVerticalGroup(
+            jP_3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 181, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Tabela de Símbolos", jP_3);
+
+        javax.swing.GroupLayout jP_4Layout = new javax.swing.GroupLayout(jP_4);
+        jP_4.setLayout(jP_4Layout);
+        jP_4Layout.setHorizontalGroup(
+            jP_4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 552, Short.MAX_VALUE)
+        );
+        jP_4Layout.setVerticalGroup(
+            jP_4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 181, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Código Objeto", jP_4);
+
+        jLabel1.setText("Mensagens");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jMenu1.setText("File");
+
+        jMI_new.setText("New");
+        jMI_new.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMI_newActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMI_new);
+
+        jMI_open.setText("Open");
+        jMenu1.add(jMI_open);
+
+        jMI_close.setText("Close");
+        jMenu1.add(jMI_close);
+
+        jMI_save.setText("Save");
+        jMenu1.add(jMI_save);
+
+        jMI_saveas.setText("Save as");
+        jMenu1.add(jMI_saveas);
+
+        jMI_print.setText("Print");
+        jMenu1.add(jMI_print);
+
+        jMI_exit.setText("Exit");
+        jMenu1.add(jMI_exit);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+
+        jMenuItem1.setText("Cut");
+        jMenu2.add(jMenuItem1);
+
+        jMenuItem3.setText("Copy");
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem4.setText("Paste");
+        jMenu2.add(jMenuItem4);
+
+        jMenuItem5.setText("Find");
+        jMenu2.add(jMenuItem5);
+
+        jMenuItem6.setText("Replace");
+        jMenu2.add(jMenuItem6);
+
+        jMenu3.setText("Edit");
+
+        jMenuItem2.setText("Cut");
+        jMenu3.add(jMenuItem2);
+
+        jMenuItem7.setText("Copy");
+        jMenu3.add(jMenuItem7);
+
+        jMenuItem8.setText("Paste");
+        jMenu3.add(jMenuItem8);
+
+        jMenuItem9.setText("Find");
+        jMenu3.add(jMenuItem9);
+
+        jMenuItem10.setText("Replace");
+        jMenu3.add(jMenuItem10);
+
+        jMenu2.add(jMenu3);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu4.setText("Execute");
+
+        jMI_execute.setText("Execute");
+        jMI_execute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMI_executeActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMI_execute);
+
+        jMI_open1.setText("Compile");
+        jMenu4.add(jMI_open1);
+
+        jMenuBar1.add(jMenu4);
+
+        jMenu5.setText("Window");
+
+        jMI_waterfall.setText("Waterfall");
+        jMenu5.add(jMI_waterfall);
+
+        jMI_sidebyside.setText("Side by Side");
+        jMenu5.add(jMI_sidebyside);
+
+        jMI_organize.setText("organize ");
+        jMenu5.add(jMI_organize);
+
+        jMenuBar1.add(jMenu5);
+
+        jMenu6.setText("Help");
+
+        jMI_about.setText("About");
+        jMI_about.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMI_aboutActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMI_about);
+
+        jMenuBar1.add(jMenu6);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(262, 262, 262))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMI_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_newActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMI_newActionPerformed
+
+    private void jMI_executeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_executeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMI_executeActionPerformed
+
+    private void jMI_aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_aboutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMI_aboutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +370,45 @@ public class JF_view extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuItem jMI_about;
+    private javax.swing.JMenuItem jMI_close;
+    private javax.swing.JMenuItem jMI_execute;
+    private javax.swing.JMenuItem jMI_exit;
+    private javax.swing.JMenuItem jMI_new;
+    private javax.swing.JMenuItem jMI_open;
+    private javax.swing.JMenuItem jMI_open1;
+    private javax.swing.JMenuItem jMI_organize;
+    private javax.swing.JMenuItem jMI_print;
+    private javax.swing.JMenuItem jMI_save;
+    private javax.swing.JMenuItem jMI_saveas;
+    private javax.swing.JMenuItem jMI_sidebyside;
+    private javax.swing.JMenuItem jMI_waterfall;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JPanel jP_1;
+    private javax.swing.JPanel jP_2;
+    private javax.swing.JPanel jP_3;
+    private javax.swing.JPanel jP_4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

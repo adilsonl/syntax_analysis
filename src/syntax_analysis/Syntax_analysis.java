@@ -5,6 +5,8 @@
  */
 package syntax_analysis;
 
+import View.JF_view;
+
 /**
  *
  * @author Adilson
@@ -16,6 +18,8 @@ public class Syntax_analysis {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        JF_view view = new JF_view();
+        view.setVisible(true);
     }
     
 }
