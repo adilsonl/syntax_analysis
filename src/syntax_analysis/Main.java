@@ -11,7 +11,7 @@ import View.JF_view;
  *
  * @author Adilson
  */
-public class Syntax_analysis {
+public class Main {
 
     /**
      * @param args the command line arguments
