@@ -23,8 +23,8 @@ public class SyntaxAnalysys {
     private ArrayList<String> createdVars = new ArrayList<>();
     private ArrayList<String> createdFunctions = new ArrayList<>();
     private ArrayList<String> createdProcedures = new ArrayList<>();
-    boolean isError  = false;
-    String errorMessage = "";
+    public boolean isError  = false;
+    public String errorMessage = "";
     
 
     public SyntaxAnalysys(ArrayList<Token> tokenList) {

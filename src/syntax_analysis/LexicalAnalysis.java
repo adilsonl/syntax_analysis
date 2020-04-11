@@ -20,7 +20,7 @@ public class LexicalAnalysis {
         "repeat", "until", "while", "then", "else", "or", "and", "not", "true", "false"};
     ArrayList<Token> tokens = new ArrayList<>();
     
-    boolean error =  false;
+    public boolean error =  false;
 
     public ArrayList<Token> realizeLexicalAnalysis(String input) {
 

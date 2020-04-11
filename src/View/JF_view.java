@@ -48,12 +48,17 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.text.DefaultEditorKit;
+import model.TRecTabSim;
+import model.Token;
+import syntax_analysis.LexicalAnalysis;
+import syntax_analysis.SyntaxAnalysys;
 
 /**
  *
  * @author Adilson
  */
 public class JF_view extends javax.swing.JFrame {
+
     public RSyntaxTextArea textArea1;
     public RSyntaxTextArea textArea2;
     public RSyntaxTextArea textArea3;
@@ -78,7 +83,7 @@ public class JF_view extends javax.swing.JFrame {
         textArea2.setCodeFoldingEnabled(true);
         RTextScrollPane sp2 = new RTextScrollPane(textArea2);
         jP_2.add(sp2);
-         //BLOCO 3
+        //BLOCO 3
         jP_3.setLayout(new BorderLayout());
         textArea3 = new RSyntaxTextArea(20, 90);
         textArea3.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DELPHI);
@@ -96,7 +101,7 @@ public class JF_view extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -115,7 +120,7 @@ public class JF_view extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtMSG = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMI_new = new javax.swing.JMenuItem();
@@ -200,9 +205,9 @@ public class JF_view extends javax.swing.JFrame {
 
         jLabel1.setText("Mensagens");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtMSG.setColumns(20);
+        txtMSG.setRows(5);
+        jScrollPane1.setViewportView(txtMSG);
 
         jMenu1.setText("File");
 
@@ -327,6 +332,11 @@ public class JF_view extends javax.swing.JFrame {
         jMenu4.add(jMI_execute);
 
         jMI_open1.setText("Compile");
+        jMI_open1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMI_open1ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMI_open1);
 
         jMenuBar1.add(jMenu4);
@@ -409,6 +419,7 @@ public class JF_view extends javax.swing.JFrame {
 
     private void jMI_executeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_executeActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_jMI_executeActionPerformed
 
     private void jMI_aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_aboutActionPerformed
@@ -417,8 +428,8 @@ public class JF_view extends javax.swing.JFrame {
                 + "Adilson Lima\n"
                 + "Lucas Gomes\n"
                 + "Wendler Ramos\n");
-        
-        
+
+
     }//GEN-LAST:event_jMI_aboutActionPerformed
 
     private void jMI_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_exitActionPerformed
@@ -432,63 +443,65 @@ public class JF_view extends javax.swing.JFrame {
         int response = fileChooser.showSaveDialog(null);
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Analise", "txt");
         fileChooser.setFileFilter(filter);
-        String stringToSave = "Fonte:\n"+textArea1.getText()+"\n Itens léxicos:\n"+textArea2.getText()
-                +"\n Tabela de Simbolos:\n"+textArea3.getText()+"\n Código Objeto :\n"+textArea4.getText();
-        if(stringToSave.charAt(stringToSave.length() -1) != '\n')
+        String stringToSave = "Fonte:\n" + textArea1.getText() + "\n Itens léxicos:\n" + textArea2.getText()
+                + "\n Tabela de Simbolos:\n" + textArea3.getText() + "\n Código Objeto :\n" + textArea4.getText();
+        if (stringToSave.charAt(stringToSave.length() - 1) != '\n') {
             stringToSave = stringToSave + "\n";
-        
+        }
+
         System.out.println(stringToSave);
-        
+
         if (response == JFileChooser.APPROVE_OPTION) {
-                try {
-                    File file = fileChooser.getSelectedFile();
-                    BufferedWriter buffWrite = new BufferedWriter(new FileWriter(file.getPath()));
-                    buffWrite.append(stringToSave);
-                    buffWrite.close();
-                } catch (IOException ex) {
-                    System.out.println(ex);
-                }
+            try {
+                File file = fileChooser.getSelectedFile();
+                BufferedWriter buffWrite = new BufferedWriter(new FileWriter(file.getPath()));
+                buffWrite.append(stringToSave);
+                buffWrite.close();
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
         } else {
             JOptionPane.showMessageDialog(rootPane, "Ocorreu um erro ao salvar");
         }
-        
+
     }//GEN-LAST:event_jMI_saveasActionPerformed
 
     private void jMI_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_closeActionPerformed
         // TODO add your handling code here:
-                System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_jMI_closeActionPerformed
 
     private void jMI_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_saveActionPerformed
         // TODO add your handling code here:
         FileSystemView system = FileSystemView.getFileSystemView();
         System.out.println(system.getHomeDirectory().getPath());
-        String stringToSave = "Fonte:\n"+textArea1.getText()+"\n Itens léxicos:\n"+textArea2.getText()
-                +"\n Tabela de Simbolos:\n"+textArea3.getText()+"\n Código Objeto :\n"+textArea4.getText();
-        if(stringToSave.charAt(stringToSave.length() -1) != '\n')
+        String stringToSave = "Fonte:\n" + textArea1.getText() + "\n Itens léxicos:\n" + textArea2.getText()
+                + "\n Tabela de Simbolos:\n" + textArea3.getText() + "\n Código Objeto :\n" + textArea4.getText();
+        if (stringToSave.charAt(stringToSave.length() - 1) != '\n') {
             stringToSave = stringToSave + "\n";
-        
+        }
+
         String caminho = System.getProperty("user.dir");
 
         try {
-                    BufferedWriter buffWrite = new BufferedWriter(new FileWriter(caminho+"/Analise.txt"));
-                    buffWrite.append(stringToSave);
-                    buffWrite.close();
-                    JOptionPane.showMessageDialog(rootPane, "Salvo no diretorio do projeto");
-                } catch (IOException ex) {
-                    System.out.println(ex);
-                }
+            BufferedWriter buffWrite = new BufferedWriter(new FileWriter(caminho + "/Analise.txt"));
+            buffWrite.append(stringToSave);
+            buffWrite.close();
+            JOptionPane.showMessageDialog(rootPane, "Salvo no diretorio do projeto");
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
     }//GEN-LAST:event_jMI_saveActionPerformed
 
     private void jMI_openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_openActionPerformed
         // TODO add your handling code here:
-        JFileChooser fileChooser = new JFileChooser(); 
+        JFileChooser fileChooser = new JFileChooser();
 
-            int returnVal = fileChooser.showOpenDialog(this);
+        int returnVal = fileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             try {
-                textArea1.read( new FileReader( file.getAbsolutePath() ), null );
+                textArea1.read(new FileReader(file.getAbsolutePath()), null);
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, "Não foi possível acessar o arquivo especificado");
             }
@@ -497,80 +510,71 @@ public class JF_view extends javax.swing.JFrame {
 
     private void jMI_printActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_printActionPerformed
         // TODO add your handling code here:
-        try {   
-      // Localiza todas as impressoras com suporte a arquivos txt   
-      PrintService[] servicosImpressao =PrintServiceLookup.lookupPrintServices(   
-             DocFlavor.INPUT_STREAM.AUTOSENSE, null);   
+        try {
+            // Localiza todas as impressoras com suporte a arquivos txt   
+            PrintService[] servicosImpressao = PrintServiceLookup.lookupPrintServices(
+                    DocFlavor.INPUT_STREAM.AUTOSENSE, null);
 
-      System.out.println("Impressoras com suporte: "+ servicosImpressao.length);   
+            System.out.println("Impressoras com suporte: " + servicosImpressao.length);
 
-      // Localiza a impressora padrão   
-      PrintService impressora = PrintServiceLookup.lookupDefaultPrintService();   
+            // Localiza a impressora padrão   
+            PrintService impressora = PrintServiceLookup.lookupDefaultPrintService();
 
-      //System.out.println("Impressora: " + impressora.getName());   
+            //System.out.println("Impressora: " + impressora.getName());   
+            //System.out.println("Imprimindo arquivo-texto");   
+            // Definição de atributos do conteúdo a ser impresso:   
+            DocFlavor docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
 
-      //System.out.println("Imprimindo arquivo-texto");   
+            // Atributos de impressão do documento   
+            HashDocAttributeSet attributes = new HashDocAttributeSet();
+            String caminho = System.getProperty("user.dir");
 
-      // Definição de atributos do conteúdo a ser impresso:   
-      DocFlavor docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;   
-
-      // Atributos de impressão do documento   
-      HashDocAttributeSet attributes = new HashDocAttributeSet();   
-        String caminho = System.getProperty("user.dir");
-               
-      String stringToSave = "Fonte:\n"+textArea1.getText()+"\n Itens léxicos:\n"+textArea2.getText()
-                +"\n Tabela de Simbolos:\n"+textArea3.getText()+"\n Código Objeto :\n"+textArea4.getText();
-        if(stringToSave.charAt(stringToSave.length() -1) != '\n')
-            stringToSave = stringToSave + "\n";
-       BufferedWriter buffWrite = new BufferedWriter(new FileWriter(caminho+"/Imprimir.txt"));
-                    buffWrite.append(stringToSave);
-                    buffWrite.close();
-        
-      // InputStream apontando para o conteúdo a ser impresso  
-   
-      FileInputStream fi = new FileInputStream("Imprimir.txt");   
-      
-      
-
-
-      // Cria um Doc para impressão a partir do arquivo exemplo.txt   
-      Doc documentoTexto = new SimpleDoc(fi, docFlavor, attributes);   
-      // Configura o conjunto de parametros para a impressora   
-      PrintRequestAttributeSet printerAttributes = new HashPrintRequestAttributeSet();   
-
-
-      boolean mostrarDialogo = true;   
-
-      if (mostrarDialogo) {   
-        // exibe um dialogo de configuracoes de impressao   
-        PrintService servico = ServiceUI.printDialog(null, 320, 240,   
-            servicosImpressao, impressora, docFlavor, printerAttributes);   
-
-        if (servico != null) {   
-          DocPrintJob printJob = servico.createPrintJob();   
-            try {   
-                printJob.print(documentoTexto, printerAttributes);
-            } catch (PrintException ex) {
-                Logger.getLogger(JF_view.class.getName()).log(Level.SEVERE, null, ex);
+            String stringToSave = "Fonte:\n" + textArea1.getText() + "\n Itens léxicos:\n" + textArea2.getText()
+                    + "\n Tabela de Simbolos:\n" + textArea3.getText() + "\n Código Objeto :\n" + textArea4.getText();
+            if (stringToSave.charAt(stringToSave.length() - 1) != '\n') {
+                stringToSave = stringToSave + "\n";
             }
-        }   
-      }   
-      else {   
-        // Cria uma tarefa de impressão   
-        DocPrintJob printJob = impressora.createPrintJob();   
+            BufferedWriter buffWrite = new BufferedWriter(new FileWriter(caminho + "/Imprimir.txt"));
+            buffWrite.append(stringToSave);
+            buffWrite.close();
 
-        // Adiciona propriedade de impressão: imprimir duas cópias   
-        printerAttributes.add(new Copies(1));   
+            // InputStream apontando para o conteúdo a ser impresso  
+            FileInputStream fi = new FileInputStream("Imprimir.txt");
 
-        // Imprime o documento sem exibir uma tela de dialogo   
-        printJob.print(documentoTexto, printerAttributes);   
-      }   
-    }   
-    catch(IOException e){  
-        //System.out.println("ERRO IO"+e.getMessage());  
-    }    
-    catch (PrintException ex2) {   
-    }  
+            // Cria um Doc para impressão a partir do arquivo exemplo.txt   
+            Doc documentoTexto = new SimpleDoc(fi, docFlavor, attributes);
+            // Configura o conjunto de parametros para a impressora   
+            PrintRequestAttributeSet printerAttributes = new HashPrintRequestAttributeSet();
+
+            boolean mostrarDialogo = true;
+
+            if (mostrarDialogo) {
+                // exibe um dialogo de configuracoes de impressao   
+                PrintService servico = ServiceUI.printDialog(null, 320, 240,
+                        servicosImpressao, impressora, docFlavor, printerAttributes);
+
+                if (servico != null) {
+                    DocPrintJob printJob = servico.createPrintJob();
+                    try {
+                        printJob.print(documentoTexto, printerAttributes);
+                    } catch (PrintException ex) {
+                        Logger.getLogger(JF_view.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            } else {
+                // Cria uma tarefa de impressão   
+                DocPrintJob printJob = impressora.createPrintJob();
+
+                // Adiciona propriedade de impressão: imprimir duas cópias   
+                printerAttributes.add(new Copies(1));
+
+                // Imprime o documento sem exibir uma tela de dialogo   
+                printJob.print(documentoTexto, printerAttributes);
+            }
+        } catch (IOException e) {
+            //System.out.println("ERRO IO"+e.getMessage());  
+        } catch (PrintException ex2) {
+        }
     }//GEN-LAST:event_jMI_printActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
@@ -589,10 +593,10 @@ public class JF_view extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-     String search = JOptionPane.showInputDialog(rootPane, "Procurar..");
-     String textTextArea = textArea1.getText();
-     int inicio = textTextArea.indexOf(search);
-     textArea1.select(inicio, inicio+search.length());
+        String search = JOptionPane.showInputDialog(rootPane, "Procurar..");
+        String textTextArea = textArea1.getText();
+        int inicio = textTextArea.indexOf(search);
+        textArea1.select(inicio, inicio + search.length());
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -616,26 +620,62 @@ public class JF_view extends javax.swing.JFrame {
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferableText, null);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMI_open1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_open1ActionPerformed
+        // TODO add your handling code here:
+        String output = "";
+        LexicalAnalysis lex = new LexicalAnalysis();
+        ArrayList<Token> tokenList = lex.realizeLexicalAnalysis(textArea1.getText());
+        for (Token t : tokenList) {
+            textArea2.append("Lexema: " + t.getLexema() + "\n");
+            textArea2.append("Classe: " + t.getClass() + "\n");
+            textArea2.append("Linha: " + t.getLine() + "\n");
+            textArea2.append("Coluna: " + t.getColumn() + "\n");
+            textArea2.append("-------------------------------\n");
+
+        }
+        if (!lex.error) {
+            SyntaxAnalysys syntaxAnalysys = new SyntaxAnalysys(tokenList);
+            syntaxAnalysys.programa();
+            ArrayList<TRecTabSim> tabSimList = syntaxAnalysys.tabSimList;
+            for (TRecTabSim t : tabSimList) {
+                textArea3.append("Lexema: " + t.getLexema() + "\n");
+                textArea3.append("Categoria: " + t.getCategory() + "\n");
+                textArea3.append("Tipo: " + t.getType() + "\n");
+                textArea3.append("Endereco: " + t.getAddress() + "\n");
+                textArea3.append("-------------------------------\n");
+            }
+
+            if (syntaxAnalysys.isError) {
+                output = output + "Analise Sintatica Incorreta" + "\n" + syntaxAnalysys.errorMessage;
+
+            } else {
+                output = "Analise Sintatica Correta.";
+            }
+        } else {
+            output = "ERRO LEXICO";
+        }
+        txtMSG.setText(output);
+    }//GEN-LAST:event_jMI_open1ActionPerformed
+
     public String getClipboardContents() {
-    String result = "";
-    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-    //odd: the Object param of getContents is not currently used
-    Transferable contents = clipboard.getContents(null);
-    boolean hasTransferableText =
-      (contents != null) &&
-      contents.isDataFlavorSupported(DataFlavor.stringFlavor)
-    ;
-    if (hasTransferableText) {
-      try {
-        result = (String)contents.getTransferData(DataFlavor.stringFlavor);
-      }
-      catch (UnsupportedFlavorException | IOException ex){
-        System.out.println(ex);
-        ex.printStackTrace();
-      }
+        String result = "";
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        //odd: the Object param of getContents is not currently used
+        Transferable contents = clipboard.getContents(null);
+        boolean hasTransferableText
+                = (contents != null)
+                && contents.isDataFlavorSupported(DataFlavor.stringFlavor);
+        if (hasTransferableText) {
+            try {
+                result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+            } catch (UnsupportedFlavorException | IOException ex) {
+                System.out.println(ex);
+                ex.printStackTrace();
+            }
+        }
+        return result;
     }
-    return result;
-  }
+
     /**
      * @param args the command line arguments
      */
@@ -706,6 +746,6 @@ public class JF_view extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea txtMSG;
     // End of variables declaration//GEN-END:variables
 }
