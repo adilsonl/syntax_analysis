@@ -136,7 +136,7 @@ public class SyntaxAnalysys {
         if (!tokenList.isEmpty() && tokenList.get(0).getLexema().equals("integer")) {
 
             for (TRecTabSim tabSim : tabSimList) {
-                if (tabSim.getAddress()!= "") {
+                if (tabSim.getAddress()!= "" || tabSim.getCategory()== "Funcao") {
                     tabSim.setType("Inteiro");
                 }
             }
