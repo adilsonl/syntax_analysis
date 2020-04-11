@@ -6,11 +6,48 @@
 package View;
 
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.ServiceUI;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashDocAttributeSet;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
+import javax.swing.ActionMap;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.text.DefaultEditorKit;
 
 /**
  *
@@ -94,12 +131,7 @@ public class JF_view extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMI_execute = new javax.swing.JMenuItem();
         jMI_open1 = new javax.swing.JMenuItem();
@@ -183,21 +215,51 @@ public class JF_view extends javax.swing.JFrame {
         jMenu1.add(jMI_new);
 
         jMI_open.setText("Open");
+        jMI_open.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMI_openActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMI_open);
 
         jMI_close.setText("Close");
+        jMI_close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMI_closeActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMI_close);
 
         jMI_save.setText("Save");
+        jMI_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMI_saveActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMI_save);
 
         jMI_saveas.setText("Save as");
+        jMI_saveas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMI_saveasActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMI_saveas);
 
         jMI_print.setText("Print");
+        jMI_print.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMI_printActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMI_print);
 
         jMI_exit.setText("Exit");
+        jMI_exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMI_exitActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMI_exit);
 
         jMenuBar1.add(jMenu1);
@@ -205,38 +267,52 @@ public class JF_view extends javax.swing.JFrame {
         jMenu2.setText("Edit");
 
         jMenuItem1.setText("Cut");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem1);
 
         jMenuItem3.setText("Copy");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setText("Paste");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuItem5.setText("Find");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem5);
 
         jMenuItem6.setText("Replace");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem6);
 
-        jMenu3.setText("Edit");
-
-        jMenuItem2.setText("Cut");
-        jMenu3.add(jMenuItem2);
-
-        jMenuItem7.setText("Copy");
-        jMenu3.add(jMenuItem7);
-
-        jMenuItem8.setText("Paste");
-        jMenu3.add(jMenuItem8);
-
-        jMenuItem9.setText("Find");
-        jMenu3.add(jMenuItem9);
-
-        jMenuItem10.setText("Replace");
-        jMenu3.add(jMenuItem10);
-
-        jMenu2.add(jMenu3);
+        jMenuItem7.setText("Select All");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem7);
 
         jMenuBar1.add(jMenu2);
 
@@ -324,6 +400,11 @@ public class JF_view extends javax.swing.JFrame {
 
     private void jMI_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_newActionPerformed
         // TODO add your handling code here:
+        textArea1.setText("");
+        textArea2.setText("");
+        textArea3.setText("");
+        textArea4.setText("");
+
     }//GEN-LAST:event_jMI_newActionPerformed
 
     private void jMI_executeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_executeActionPerformed
@@ -332,8 +413,229 @@ public class JF_view extends javax.swing.JFrame {
 
     private void jMI_aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_aboutActionPerformed
         // TODO add your handling code here:
+        JOptionPane.showMessageDialog(rootPane, "Integrantes :\n"
+                + "Adilson Lima\n"
+                + "Lucas Gomes\n"
+                + "Wendler Ramos\n");
+        
+        
     }//GEN-LAST:event_jMI_aboutActionPerformed
 
+    private void jMI_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_exitActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMI_exitActionPerformed
+
+    private void jMI_saveasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_saveasActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        int response = fileChooser.showSaveDialog(null);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Analise", "txt");
+        fileChooser.setFileFilter(filter);
+        String stringToSave = "Fonte:\n"+textArea1.getText()+"\n Itens léxicos:\n"+textArea2.getText()
+                +"\n Tabela de Simbolos:\n"+textArea3.getText()+"\n Código Objeto :\n"+textArea4.getText();
+        if(stringToSave.charAt(stringToSave.length() -1) != '\n')
+            stringToSave = stringToSave + "\n";
+        
+        System.out.println(stringToSave);
+        
+        if (response == JFileChooser.APPROVE_OPTION) {
+                try {
+                    File file = fileChooser.getSelectedFile();
+                    BufferedWriter buffWrite = new BufferedWriter(new FileWriter(file.getPath()));
+                    buffWrite.append(stringToSave);
+                    buffWrite.close();
+                } catch (IOException ex) {
+                    System.out.println(ex);
+                }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Ocorreu um erro ao salvar");
+        }
+        
+    }//GEN-LAST:event_jMI_saveasActionPerformed
+
+    private void jMI_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_closeActionPerformed
+        // TODO add your handling code here:
+                System.exit(0);
+    }//GEN-LAST:event_jMI_closeActionPerformed
+
+    private void jMI_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_saveActionPerformed
+        // TODO add your handling code here:
+        FileSystemView system = FileSystemView.getFileSystemView();
+        System.out.println(system.getHomeDirectory().getPath());
+        String stringToSave = "Fonte:\n"+textArea1.getText()+"\n Itens léxicos:\n"+textArea2.getText()
+                +"\n Tabela de Simbolos:\n"+textArea3.getText()+"\n Código Objeto :\n"+textArea4.getText();
+        if(stringToSave.charAt(stringToSave.length() -1) != '\n')
+            stringToSave = stringToSave + "\n";
+        
+        String caminho = System.getProperty("user.dir");
+
+        try {
+                    BufferedWriter buffWrite = new BufferedWriter(new FileWriter(caminho+"/Analise.txt"));
+                    buffWrite.append(stringToSave);
+                    buffWrite.close();
+                    JOptionPane.showMessageDialog(rootPane, "Salvo no diretorio do projeto");
+                } catch (IOException ex) {
+                    System.out.println(ex);
+                }
+    }//GEN-LAST:event_jMI_saveActionPerformed
+
+    private void jMI_openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_openActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser(); 
+
+            int returnVal = fileChooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            try {
+                textArea1.read( new FileReader( file.getAbsolutePath() ), null );
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi possível acessar o arquivo especificado");
+            }
+        }
+    }//GEN-LAST:event_jMI_openActionPerformed
+
+    private void jMI_printActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_printActionPerformed
+        // TODO add your handling code here:
+        try {   
+      // Localiza todas as impressoras com suporte a arquivos txt   
+      PrintService[] servicosImpressao =PrintServiceLookup.lookupPrintServices(   
+             DocFlavor.INPUT_STREAM.AUTOSENSE, null);   
+
+      System.out.println("Impressoras com suporte: "+ servicosImpressao.length);   
+
+      // Localiza a impressora padrão   
+      PrintService impressora = PrintServiceLookup.lookupDefaultPrintService();   
+
+      //System.out.println("Impressora: " + impressora.getName());   
+
+      //System.out.println("Imprimindo arquivo-texto");   
+
+      // Definição de atributos do conteúdo a ser impresso:   
+      DocFlavor docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;   
+
+      // Atributos de impressão do documento   
+      HashDocAttributeSet attributes = new HashDocAttributeSet();   
+        String caminho = System.getProperty("user.dir");
+               
+      String stringToSave = "Fonte:\n"+textArea1.getText()+"\n Itens léxicos:\n"+textArea2.getText()
+                +"\n Tabela de Simbolos:\n"+textArea3.getText()+"\n Código Objeto :\n"+textArea4.getText();
+        if(stringToSave.charAt(stringToSave.length() -1) != '\n')
+            stringToSave = stringToSave + "\n";
+       BufferedWriter buffWrite = new BufferedWriter(new FileWriter(caminho+"/Imprimir.txt"));
+                    buffWrite.append(stringToSave);
+                    buffWrite.close();
+        
+      // InputStream apontando para o conteúdo a ser impresso  
+   
+      FileInputStream fi = new FileInputStream("Imprimir.txt");   
+      
+      
+
+
+      // Cria um Doc para impressão a partir do arquivo exemplo.txt   
+      Doc documentoTexto = new SimpleDoc(fi, docFlavor, attributes);   
+      // Configura o conjunto de parametros para a impressora   
+      PrintRequestAttributeSet printerAttributes = new HashPrintRequestAttributeSet();   
+
+
+      boolean mostrarDialogo = true;   
+
+      if (mostrarDialogo) {   
+        // exibe um dialogo de configuracoes de impressao   
+        PrintService servico = ServiceUI.printDialog(null, 320, 240,   
+            servicosImpressao, impressora, docFlavor, printerAttributes);   
+
+        if (servico != null) {   
+          DocPrintJob printJob = servico.createPrintJob();   
+            try {   
+                printJob.print(documentoTexto, printerAttributes);
+            } catch (PrintException ex) {
+                Logger.getLogger(JF_view.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }   
+      }   
+      else {   
+        // Cria uma tarefa de impressão   
+        DocPrintJob printJob = impressora.createPrintJob();   
+
+        // Adiciona propriedade de impressão: imprimir duas cópias   
+        printerAttributes.add(new Copies(1));   
+
+        // Imprime o documento sem exibir uma tela de dialogo   
+        printJob.print(documentoTexto, printerAttributes);   
+      }   
+    }   
+    catch(IOException e){  
+        //System.out.println("ERRO IO"+e.getMessage());  
+    }    
+    catch (PrintException ex2) {   
+    }  
+    }//GEN-LAST:event_jMI_printActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        textArea1.selectAll();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        String search = JOptionPane.showInputDialog(rootPane, "Procurar..");
+        String replace = JOptionPane.showInputDialog(rootPane, "Por..");
+        String textTextArea = textArea1.getText();
+        textTextArea = textTextArea.replaceAll(search, replace);
+        textArea1.setText(textTextArea);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+     String search = JOptionPane.showInputDialog(rootPane, "Procurar..");
+     String textTextArea = textArea1.getText();
+     int inicio = textTextArea.indexOf(search);
+     textArea1.select(inicio, inicio+search.length());
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        Transferable transferableText = new StringSelection(textArea1.getSelectedText());
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferableText, null);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        textArea1.append(getClipboardContents());
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        String toCopy = textArea1.getSelectedText();
+        String textoTextArea1 = textArea1.getText();
+        textoTextArea1 = textoTextArea1.replaceAll(toCopy, "");
+        textArea1.setText(textoTextArea1);
+        Transferable transferableText = new StringSelection(toCopy);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferableText, null);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    public String getClipboardContents() {
+    String result = "";
+    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+    //odd: the Object param of getContents is not currently used
+    Transferable contents = clipboard.getContents(null);
+    boolean hasTransferableText =
+      (contents != null) &&
+      contents.isDataFlavorSupported(DataFlavor.stringFlavor)
+    ;
+    if (hasTransferableText) {
+      try {
+        result = (String)contents.getTransferData(DataFlavor.stringFlavor);
+      }
+      catch (UnsupportedFlavorException | IOException ex){
+        System.out.println(ex);
+        ex.printStackTrace();
+      }
+    }
+    return result;
+  }
     /**
      * @param args the command line arguments
      */
@@ -387,21 +689,16 @@ public class JF_view extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMI_waterfall;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jP_1;
     private javax.swing.JPanel jP_2;
     private javax.swing.JPanel jP_3;
