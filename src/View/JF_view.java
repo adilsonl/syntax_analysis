@@ -560,22 +560,22 @@ public class JF_view extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
         int tab = jTabbedPane1.getSelectedIndex();
-        switch(tab){
-        
+        switch (tab) {
+
             case 0:
                 textArea1.selectAll();
                 break;
-           case 1:
+            case 1:
                 textArea2.selectAll();
                 break;
-           case 2:
+            case 2:
                 textArea3.selectAll();
                 break;
-           case 3:
+            case 3:
                 textArea4.selectAll();
                 break;
         }
-        
+
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
@@ -583,66 +583,66 @@ public class JF_view extends javax.swing.JFrame {
         String search = JOptionPane.showInputDialog(rootPane, "Procurar..");
         String replace = JOptionPane.showInputDialog(rootPane, "Por..");
         int tab = jTabbedPane1.getSelectedIndex();
-        switch(tab){
-            
+        switch (tab) {
+
             case 0:
-                    String textTextArea1 = textArea1.getText();
-                    textTextArea1 = textTextArea1.replaceAll(search, replace);
-                    textArea1.setText(textTextArea1);
+                String textTextArea1 = textArea1.getText();
+                textTextArea1 = textTextArea1.replaceAll(search, replace);
+                textArea1.setText(textTextArea1);
                 break;
-           case 1:
-                    String textTextArea2 = textArea2.getText();
-                    textTextArea2 = textTextArea2.replaceAll(search, replace);
-                    textArea2.setText(textTextArea2);
+            case 1:
+                String textTextArea2 = textArea2.getText();
+                textTextArea2 = textTextArea2.replaceAll(search, replace);
+                textArea2.setText(textTextArea2);
                 break;
-           case 2:
-                    String textTextArea3 = textArea3.getText();
-                    textTextArea3 = textTextArea3.replaceAll(search, replace);
-                    textArea3.setText(textTextArea3);
+            case 2:
+                String textTextArea3 = textArea3.getText();
+                textTextArea3 = textTextArea3.replaceAll(search, replace);
+                textArea3.setText(textTextArea3);
                 break;
-           case 3:
-                    String textTextArea4 = textArea4.getText();
-                    textTextArea4 = textTextArea4.replaceAll(search, replace);
-                    textArea4.setText(textTextArea4);
+            case 3:
+                String textTextArea4 = textArea4.getText();
+                textTextArea4 = textTextArea4.replaceAll(search, replace);
+                textArea4.setText(textTextArea4);
                 break;
         }
-      
+
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
         String search = JOptionPane.showInputDialog(rootPane, "Procurar..");
         int tab = jTabbedPane1.getSelectedIndex();
-        switch(tab){
+        switch (tab) {
             case 0:
-                    String textTextArea1 = textArea1.getText();
-                    int inicio1 = textTextArea1.indexOf(search);
-                    textArea1.select(inicio1, inicio1 + search.length());
+                String textTextArea1 = textArea1.getText();
+                int inicio1 = textTextArea1.indexOf(search);
+                textArea1.select(inicio1, inicio1 + search.length());
                 break;
-           case 1:
-                    String textTextArea2 = textArea2.getText();
-                    int inicio2 = textTextArea2.indexOf(search);
-                    textArea2.select(inicio2, inicio2 + search.length());
+            case 1:
+                String textTextArea2 = textArea2.getText();
+                int inicio2 = textTextArea2.indexOf(search);
+                textArea2.select(inicio2, inicio2 + search.length());
                 break;
-           case 2:
-                    String textTextArea3 = textArea3.getText();
-                    int inicio3 = textTextArea3.indexOf(search);
-                    textArea3.select(inicio3, inicio3 + search.length());
+            case 2:
+                String textTextArea3 = textArea3.getText();
+                int inicio3 = textTextArea3.indexOf(search);
+                textArea3.select(inicio3, inicio3 + search.length());
                 break;
             case 3:
-                    String textTextArea4 = textArea4.getText();
-                    int inicio4 = textTextArea4.indexOf(search);
-                    textArea4.select(inicio4, inicio4 + search.length());
+                String textTextArea4 = textArea4.getText();
+                int inicio4 = textTextArea4.indexOf(search);
+                textArea4.select(inicio4, inicio4 + search.length());
                 break;
-        
+
         }
-      
+
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
         int tab = jTabbedPane1.getSelectedIndex();
-        switch(tab){
+        switch (tab) {
             case 0:
                 Transferable transferableText1 = new StringSelection(textArea1.getSelectedText());
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferableText1, null);
@@ -660,41 +660,69 @@ public class JF_view extends javax.swing.JFrame {
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferableText4, null);
                 break;
         }
-       
+
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
         int tab = jTabbedPane1.getSelectedIndex();
-        switch(tab){
+        switch (tab) {
             case 0:
                 int position1 = textArea1.getCaretPosition();
-                System.out.println(position1);
-                //String texto1 = textArea1.getText();
-                //String pt1texto1 = texto1.substring(0, position1);
-                //String pt2texto1 = texto1.substring(position1);
-                //System.out.println(pt1texto1);
-                //System.out.println(pt2texto1);
-                //String final1 = pt1texto1+getClipboardContents()+pt2texto1;
-                textArea1.append(getClipboardContents());
+                if (textArea1.getText().length() != position1) {
+                    String texto1 = textArea1.getText();
+                    String pt1texto1 = texto1.substring(0, position1);
+                    String pt2texto1 = texto1.substring(position1);
+                    String final1 = pt1texto1+getClipboardContents()+pt2texto1;
+                    textArea1.setText(final1);
+                } else {
+                    textArea1.append(getClipboardContents());
+                }
                 break;
             case 1:
-                textArea2.append(getClipboardContents());
+                int position2 = textArea2.getCaretPosition();
+                if (textArea2.getText().length() != position2) {
+                    String texto2 = textArea2.getText();
+                    String pt1texto2 = texto2.substring(0, position2);
+                    String pt2texto2 = texto2.substring(position2);
+                    String final2 = pt1texto2+getClipboardContents()+pt2texto2;
+                    textArea2.setText(final2);
+                } else {
+                    textArea2.append(getClipboardContents());
+                }
                 break;
             case 2:
-                textArea3.append(getClipboardContents());
+                int position3 = textArea3.getCaretPosition();
+                if (textArea3.getText().length() != position3) {
+                    String texto3 = textArea3.getText();
+                    String pt1texto3 = texto3.substring(0, position3);
+                    String pt2texto3 = texto3.substring(position3);
+                    String final3 = pt1texto3+getClipboardContents()+pt2texto3;
+                    textArea3.setText(final3);
+                } else {
+                    textArea3.append(getClipboardContents());
+                }
                 break;
             case 3:
-                textArea4.append(getClipboardContents());
+                  int position4 = textArea4.getCaretPosition();
+                if (textArea4.getText().length() != position4) {
+                    String texto4 = textArea4.getText();
+                    String pt1texto4 = texto4.substring(0, position4);
+                    String pt2texto4 = texto4.substring(position4);
+                    String final4 = pt1texto4+getClipboardContents()+pt2texto4;
+                    textArea4.setText(final4);
+                } else {
+                    textArea4.append(getClipboardContents());
+                }
                 break;
         }
-        
+
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         int tab = jTabbedPane1.getSelectedIndex();
-        switch(tab){
+        switch (tab) {
             case 0:
                 String toCopy1 = textArea1.getSelectedText();
                 String textoTextArea1 = textArea1.getText();
@@ -727,9 +755,9 @@ public class JF_view extends javax.swing.JFrame {
                 Transferable transferableText4 = new StringSelection(toCopy4);
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferableText4, null);
                 break;
-                
+
         }
-       
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMI_open1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_open1ActionPerformed
@@ -743,7 +771,7 @@ public class JF_view extends javax.swing.JFrame {
         ArrayList<Token> tokenList = lex.realizeLexicalAnalysis(textArea1.getText());
         for (Token t : tokenList) {
             textArea2.append("Lexema: " + t.getLexema() + "\n");
-            textArea2.append("Classe: " + t.getTokenClass()+ "\n");
+            textArea2.append("Classe: " + t.getTokenClass() + "\n");
             textArea2.append("Linha: " + t.getLine() + "\n");
             textArea2.append("Coluna: " + t.getColumn() + "\n");
             textArea2.append("-------------------------------\n");
@@ -791,14 +819,15 @@ public class JF_view extends javax.swing.JFrame {
         }
         return result;
     }
-    
-    void clearAll(){
+
+    void clearAll() {
         textArea1.setText("");
         textArea2.setText("");
         textArea3.setText("");
         textArea4.setText("");
         txtMSG.setText("");
     }
+
     /**
      * @param args the command line arguments
      */
