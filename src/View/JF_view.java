@@ -26,6 +26,8 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -48,7 +50,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.text.DefaultEditorKit;
-import model.TRecTabSim;
+import model.Register;
 import model.Token;
 import syntax_analysis.LexicalAnalysis;
 import syntax_analysis.SyntaxAnalysys;
@@ -399,7 +401,16 @@ public class JF_view extends javax.swing.JFrame {
 
     private void jMI_executeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_executeActionPerformed
         // TODO add your handling code here:
-        System.out.println(jTabbedPane1.getSelectedIndex());
+        if (!textArea4.getText().isEmpty()) {
+            try {
+
+                String[] args = new String[] {"io.elementary.terminal","-e","./file"};
+                Process proc = new ProcessBuilder(args).start();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Não pode ser executado",
+                        "Error!", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_jMI_executeActionPerformed
 
     private void jMI_aboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMI_aboutActionPerformed
@@ -669,51 +680,23 @@ public class JF_view extends javax.swing.JFrame {
         switch (tab) {
             case 0:
                 int position1 = textArea1.getCaretPosition();
-                if (textArea1.getText().length() != position1) {
-                    String texto1 = textArea1.getText();
-                    String pt1texto1 = texto1.substring(0, position1);
-                    String pt2texto1 = texto1.substring(position1);
-                    String final1 = pt1texto1+getClipboardContents()+pt2texto1;
-                    textArea1.setText(final1);
-                } else {
-                    textArea1.append(getClipboardContents());
-                }
+                System.out.println(position1);
+                //String texto1 = textArea1.getText();
+                //String pt1texto1 = texto1.substring(0, position1);
+                //String pt2texto1 = texto1.substring(position1);
+                //System.out.println(pt1texto1);
+                //System.out.println(pt2texto1);
+                //String final1 = pt1texto1+getClipboardContents()+pt2texto1;
+                textArea1.append(getClipboardContents());
                 break;
             case 1:
-                int position2 = textArea2.getCaretPosition();
-                if (textArea2.getText().length() != position2) {
-                    String texto2 = textArea2.getText();
-                    String pt1texto2 = texto2.substring(0, position2);
-                    String pt2texto2 = texto2.substring(position2);
-                    String final2 = pt1texto2+getClipboardContents()+pt2texto2;
-                    textArea2.setText(final2);
-                } else {
-                    textArea2.append(getClipboardContents());
-                }
+                textArea2.append(getClipboardContents());
                 break;
             case 2:
-                int position3 = textArea3.getCaretPosition();
-                if (textArea3.getText().length() != position3) {
-                    String texto3 = textArea3.getText();
-                    String pt1texto3 = texto3.substring(0, position3);
-                    String pt2texto3 = texto3.substring(position3);
-                    String final3 = pt1texto3+getClipboardContents()+pt2texto3;
-                    textArea3.setText(final3);
-                } else {
-                    textArea3.append(getClipboardContents());
-                }
+                textArea3.append(getClipboardContents());
                 break;
             case 3:
-                  int position4 = textArea4.getCaretPosition();
-                if (textArea4.getText().length() != position4) {
-                    String texto4 = textArea4.getText();
-                    String pt1texto4 = texto4.substring(0, position4);
-                    String pt2texto4 = texto4.substring(position4);
-                    String final4 = pt1texto4+getClipboardContents()+pt2texto4;
-                    textArea4.setText(final4);
-                } else {
-                    textArea4.append(getClipboardContents());
-                }
+                textArea4.append(getClipboardContents());
                 break;
         }
 
@@ -780,20 +763,33 @@ public class JF_view extends javax.swing.JFrame {
         if (!lex.error) {
             SyntaxAnalysys syntaxAnalysys = new SyntaxAnalysys(tokenList);
             syntaxAnalysys.programa();
-            ArrayList<TRecTabSim> tabSimList = syntaxAnalysys.tabSimList;
-            for (TRecTabSim t : tabSimList) {
+            ArrayList<Register> tabSimList = syntaxAnalysys.tabSimList;
+            for (Register t : tabSimList) {
                 textArea3.append("Lexema: " + t.getLexema() + "\n");
                 textArea3.append("Categoria: " + t.getCategory() + "\n");
                 textArea3.append("Tipo: " + t.getType() + "\n");
                 textArea3.append("Endereco: " + t.getAddress() + "\n");
                 textArea3.append("-------------------------------\n");
+
             }
 
             if (syntaxAnalysys.isError) {
-                output = output + "Analise Sintatica Incorreta" + "\n" + syntaxAnalysys.errorMessage;
+                output = output + "Analise Sintatica e/ou Semantica Incorreta" + "\n" + syntaxAnalysys.errorMessage;
 
             } else {
-                output = "Analise Sintatica Correta.";
+                output = "Analise Sintatica e Semantica Correta. \n";
+                textArea4.append(syntaxAnalysys.getAssembly());
+                try {
+                    FileWriter fw = new FileWriter("file.asm");
+                    fw.write(syntaxAnalysys.getAssembly());
+                    fw.close();
+                    Runtime.getRuntime().exec(" nasm -f elf32 file.asm -o file.o");
+                    Runtime.getRuntime().exec("gcc -m32 file.o -o file");
+                    output += "COMPILADO COM SUCESSO";
+                } catch (Exception e) {
+                    output = "ERRO AO GRAVAR O ARQUIVO ASM.";
+                }
+
             }
         } else {
             output = "ERRO LEXICO";
