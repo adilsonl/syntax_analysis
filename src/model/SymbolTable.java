@@ -171,6 +171,27 @@ public class SymbolTable {
         return tableHasFunction(symbolTable.getDadSymbolTable(), lexema);
 
     }
+    
+      public Register tableHasFunctionReturningRegister(SymbolTable symbolTable, String lexema) {
+
+        if (symbolTable.dadSymbolTable == null) {
+            for (Register r : symbolTable.getRegistersList()) {
+                if (r.getLexema().equalsIgnoreCase(lexema) && r.getCategory().equalsIgnoreCase("Funcao")) {
+                    return r;
+                }
+            }
+            return null;
+        }
+
+        for (Register r : symbolTable.getRegistersList()) {
+            if (r.getLexema().equalsIgnoreCase(lexema) && r.getCategory().equalsIgnoreCase("Funcao")) {
+                return r;
+            }
+        }
+
+        return tableHasFunctionReturningRegister(symbolTable.getDadSymbolTable(), lexema);
+
+    }
 
     public Register tableHasFunctionOnCurrentNivel(SymbolTable symbolTable, String lexema) {
 

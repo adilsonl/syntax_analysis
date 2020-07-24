@@ -34,19 +34,13 @@ mov dword [ESP], 0
 Fim0: 
 pop eax 
 cmp eax, 1 
-jne rotuloElse0 
+jne rotuloFim1 
 mov dword[_@DSP +0 ], ebp
 push dword[ebp + (-4) ]
 push @message1
 call printf
 add esp, 8
 jmp rotuloFim1
-rotuloElse0: 
-mov dword[_@DSP +0 ], ebp
-push dword[ebp + (-8) ]
-push @message2
-call printf
-add esp, 8
 rotuloFim1: 
 add esp, 12
 mov esp, ebp
@@ -56,5 +50,4 @@ ret
 section .data
 _@Integer: db '%d',0 
 @message1: db '%d',0 
-@message2: db '%d',0 
 _@DSP: times 4 db 0

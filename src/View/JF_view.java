@@ -404,7 +404,7 @@ public class JF_view extends javax.swing.JFrame {
         if (!textArea4.getText().isEmpty()) {
             try {
 
-                String[] args = new String[] {"io.elementary.terminal","-e","./file"};
+                String[] args = new String[] {"io.elementary.terminal","-e"," ./file"};
                 Process proc = new ProcessBuilder(args).start();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "Não pode ser executado",
@@ -783,9 +783,15 @@ public class JF_view extends javax.swing.JFrame {
                     FileWriter fw = new FileWriter("file.asm");
                     fw.write(syntaxAnalysys.getAssembly());
                     fw.close();
-                    Runtime.getRuntime().exec(" nasm -f elf32 file.asm -o file.o");
-                    Runtime.getRuntime().exec("gcc -m32 file.o -o file");
-                    output += "COMPILADO COM SUCESSO";
+                    Process p1 = Runtime.getRuntime().exec(" nasm -f elf32 file.asm -o file.o");
+                    Process p2 = Runtime.getRuntime().exec("gcc -m32 file.o -o file");
+                    final int exitValue1 = p1.waitFor();
+                    final int exitValue2 = p2.waitFor();
+                    if(exitValue1 == 0 && exitValue2 == 0)
+                        output += "COMPILADO COM SUCESSO";
+                    else{
+                        output += "Ocorreu algum erro na compilacao";
+                    }
                 } catch (Exception e) {
                     output = "ERRO AO GRAVAR O ARQUIVO ASM.";
                 }

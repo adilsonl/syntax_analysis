@@ -834,13 +834,24 @@ read ( <var_read> ) | write ( <exp_write> ) | writeln ( <exp_write> ) | for id  
         else if (!tokenList.isEmpty() && tokenList.get(0).getLexema().equals("if")) {
             lex();
             expressaoLogica();
+            boolean hasElse = this.hasElse();
+            if(hasElse){
+                //ACAO {A19}
+                this.bodyAssembly += "pop eax \n"
+                        + "cmp eax, 1 \n"
+                        + "jne rotuloElse" + this.rotElseCounter + " \n";
 
-            //ACAO {A19}
-            this.bodyAssembly += "pop eax \n"
-                    + "cmp eax, 1 \n"
-                    + "jne rotuloElse" + this.rotElseCounter + " \n";
+                //FIM {A19}                
+            }
+            
+            //Caso nao tenha else, tenho que pular pro rotulo fim quando a comparaçao for falsa.
+            else{
+                
+                this.bodyAssembly += "pop eax \n"
+                        + "cmp eax, 1 \n"
+                        + "jne rotuloFim" + this.rotFimCounter + " \n";
+            }
 
-            //FIM {A19}
             if (!tokenList.isEmpty() && tokenList.get(0).getLexema().equals("then")) {
                 lex();
                 bloco();
@@ -1413,6 +1424,21 @@ read ( <var_read> ) | write ( <exp_write> ) | writeln ( <exp_write> ) | for id  
         Register register = new Register(lexema, category, type, address);
         tabSimList.add(register);
 
+    }
+
+    private boolean hasElse() {
+
+        for (Token token : this.tokenList){
+            
+            if(token.getLexema().equalsIgnoreCase("else")){
+                return true;
+            }
+            
+            if(token.getLexema().equalsIgnoreCase("if")){
+                return false;
+            }
+        }
+        return false;
     }
 
 }
