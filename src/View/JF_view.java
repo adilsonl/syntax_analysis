@@ -65,6 +65,7 @@ public class JF_view extends javax.swing.JFrame {
     public RSyntaxTextArea textArea2;
     public RSyntaxTextArea textArea3;
     public RSyntaxTextArea textArea4;
+    private boolean isWindows;
 
     /**
      * Creates new form JF_view
@@ -102,6 +103,7 @@ public class JF_view extends javax.swing.JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
+        this.isWindows = false;
     }
 
     /**
@@ -403,9 +405,13 @@ public class JF_view extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (!textArea4.getText().isEmpty()) {
             try {
-
-                String[] args = new String[] {"io.elementary.terminal","-e"," ./file"};
-                Process proc = new ProcessBuilder(args).start();
+                if(!this.isWindows){
+                    String[] args = new String[] {"io.elementary.terminal","-e"," ./file"};
+                    Process proc = new ProcessBuilder(args).start();    
+                }
+                else {
+                    Runtime.getRuntime().exec("cmd /c start cmd.exe /K file.exe");
+                }
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "Não pode ser executado",
                         "Error!", JOptionPane.INFORMATION_MESSAGE);
@@ -783,10 +789,21 @@ public class JF_view extends javax.swing.JFrame {
                     FileWriter fw = new FileWriter("file.asm");
                     fw.write(syntaxAnalysys.getAssembly());
                     fw.close();
-                    Process p1 = Runtime.getRuntime().exec(" nasm -f elf32 file.asm -o file.o");
-                    Process p2 = Runtime.getRuntime().exec("gcc -m32 file.o -o file");
-                    final int exitValue1 = p1.waitFor();
-                    final int exitValue2 = p2.waitFor();
+                    final int exitValue1;
+                    final int exitValue2;
+                    if(!this.isWindows){
+                        Process p1 = Runtime.getRuntime().exec(" nasm -f elf32 file.asm -o file.o");
+                        Process p2 = Runtime.getRuntime().exec("gcc -m32 file.o -o file");
+                        exitValue1 = p1.waitFor();
+                        exitValue2 = p2.waitFor();
+                    }
+                    else{
+                        Process p1 = Runtime.getRuntime().exec(" nasm -f win32 file.asm -o file.o");
+                        Process p2 = Runtime.getRuntime().exec("gcc file.o -o file.exe");
+                        exitValue1 = p1.waitFor();
+                        exitValue2 = p2.waitFor();
+                    }
+                    
                     if(exitValue1 == 0 && exitValue2 == 0)
                         output += "COMPILADO COM SUCESSO";
                     else{

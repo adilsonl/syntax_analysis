@@ -47,6 +47,7 @@ public class SyntaxAnalysys {
     private int paramCounter = 0;
     private boolean hasIntegerOnData = false;
     private boolean isWrite = false;
+    private boolean isWindows = false;
 
     public SyntaxAnalysys(ArrayList<Token> tokenList) {
         this.tokenList = tokenList;
@@ -81,13 +82,33 @@ public class SyntaxAnalysys {
                     table.setDadSymbolTable(null);
                     this.nivel = 0;
                     this.offsetVariavel = 0;
-                    table.addRegister(tokenList.get(0).getLexema(), "program", nivel, 0, 0, "main", table);
+                    if(!isWindows){
+                        table.addRegister(tokenList.get(0).getLexema(), "program", nivel, 0, 0, "main", table);
+                    }
+                    else{
+                        table.addRegister(tokenList.get(0).getLexema(), "program", nivel, 0, 0, "_main", table);
+                    }
+                    
                     this.allTables.add(table);
-                    this.headerAssembly = "global main\n"
+                    
+                    if(!this.isWindows){
+                        this.headerAssembly = "global main\n"
                             + "extern printf\n"
                             + "extern putchar\n"
                             + "extern scanf \n"
                             + "section .text\n\n";
+                    }
+
+                    else{
+                        
+                        this.headerAssembly = "global _main\n"
+                            + "extern _printf\n"
+                            + "extern _putchar\n"
+                            + "extern _scanf \n"
+                            + "section .text\n\n";
+                            
+                    
+                    }
                     // FINAL DA ACAO {A01}
                     lex();
                     if (!tokenList.isEmpty() && tokenList.get(0).getLexema().equals(";")) {
@@ -519,13 +540,25 @@ public class SyntaxAnalysys {
                             + "push dword [_@DSP + " + (register.getNivel() * 4) + "] \n"
                             + "mov ebp, esp \n";
                 }
-
-                this.bodyAssembly += "mov edx, ebp \n"
+                if(!isWindows){
+                    this.bodyAssembly += "mov edx, ebp \n"
                         + "lea eax, [edx + " + register.getOffset() + "] \n"
                         + "push eax \n"
                         + "push _@Integer \n"
                         + "call scanf \n"
                         + "add esp, 8 \n";
+                    
+                }
+                else{
+                    this.bodyAssembly += "mov edx, ebp \n"
+                        + "lea eax, [edx + " + register.getOffset() + "] \n"
+                        + "push eax \n"
+                        + "push _@Integer \n"
+                        + "call _scanf \n"
+                        + "add esp, 8 \n";
+                }
+
+                
 
                 if (register != null) {
                     if (register.getNivel() != this.nivel) {
@@ -576,10 +609,17 @@ public class SyntaxAnalysys {
                 this.dataAssembly += "10, 0 \n ";
 
             }
-
-            this.bodyAssembly += "push @message" + this.stringCounter + "\n"
+            if(!isWindows){
+                this.bodyAssembly += "push @message" + this.stringCounter + "\n"
                     + "call printf\n"
                     + "add esp, 4\n";
+            }
+            else{
+                this.bodyAssembly += "push @message" + this.stringCounter + "\n"
+                    + "call _printf\n"
+                    + "add esp, 4\n";
+            }
+            
             //FIM {A59}
 
             lex();
@@ -606,12 +646,21 @@ public class SyntaxAnalysys {
                     this.dataAssembly += "10, 0 \n";
 
                 }
-
-                this.bodyAssembly += "mov dword[_@DSP +" + register.getNivel() * 4 + " ], ebp\n"
+                if(!isWindows){
+                    this.bodyAssembly += "mov dword[_@DSP +" + register.getNivel() * 4 + " ], ebp\n"
                         + "push dword[ebp + (" + register.getOffset() + ") ]\n"
                         + "push @message" + this.stringCounter + "\n"
                         + "call printf\n"
                         + "add esp, 8\n";
+                }
+                else{
+                    this.bodyAssembly += "mov dword[_@DSP +" + register.getNivel() * 4 + " ], ebp\n"
+                        + "push dword[ebp + (" + register.getOffset() + ") ]\n"
+                        + "push @message" + this.stringCounter + "\n"
+                        + "call _printf\n"
+                        + "add esp, 8\n";
+                }
+                
 
             } else {
                 error("varWrite", "Identificador nao esta na tabela / nao e variavel nem parametro.");
