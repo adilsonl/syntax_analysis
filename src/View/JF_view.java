@@ -416,6 +416,8 @@ public class JF_view extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Não pode ser executado",
                         "Error!", JOptionPane.INFORMATION_MESSAGE);
             }
+        }else{
+            txtMSG.setText("O codigo objeto esta em branco, por favor, compile.");
         }
     }//GEN-LAST:event_jMI_executeActionPerformed
 
