@@ -944,7 +944,13 @@ read ( <var_read> ) | write ( <exp_write> ) | writeln ( <exp_write> ) | for id  
                 expressao();
 
                 //ACAO {A22}
-                this.bodyAssembly += "pop dword [EBP + (" + register.getOffset() + ")] \n";
+                if(this.nivel != register.getNivel() ){
+                    this.bodyAssembly += "mov edx, dword [_@DSP + 0] \n"
+                            + "pop dword[edx + ("+ register.getOffset() + ")] \n";
+                }else{
+                    this.bodyAssembly += "pop dword [EBP + (" + register.getOffset() + ")] \n";
+                }
+                
 
                 //FIM {A22}
             } else {
